@@ -1,5 +1,45 @@
+<!DOCTYPE html>
 <html>
-  <body>
-    <h1>CyberSimha</h1>
-  </body>
+<head>
+    <title>Progress Tracker</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <div style="width: 400px; margin: auto; text-align: center;">
+        <h2>Project Timeline</h2>
+        <canvas id="myChart"></canvas>
+    </div>
+
+    <script>
+        const startDate = new Date('2026-02-02');
+        const endDate = new Date('2027-01-01');
+        const today = new Date();
+
+        // Calculate Days
+        const total = (endDate - startDate) / (1000 * 60 * 60 * 24);
+        let elapsed = Math.floor((today - startDate) / (1000 * 60 * 60 * 24));
+        
+        // Safety checks
+        elapsed = Math.max(0, Math.min(elapsed, total));
+        const remaining = total - elapsed;
+
+        // Render Chart
+        const ctx = document.getElementById('myChart').getContext('2d');
+        new Chart(ctx, {
+            type: 'doughnut',
+            data: {
+                labels: ['Elapsed Days', 'Remaining Days'],
+                datasets: [{
+                    data: [elapsed, remaining],
+                    backgroundColor: ['#FF6384', '#36A2EB']
+                }]
+            },
+            options: {
+                plugins: {
+                    legend: { position: 'bottom' }
+                }
+            }
+        });
+    </script>
+</body>
 </html>
