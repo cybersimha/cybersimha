@@ -1,42 +1,94 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Progress Tracker</title>
+    <meta charset="UTF-8">
+    <title>Project - Niyam</title>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;600&display=swap" rel="stylesheet">
+    <style>
+        body {
+            /* Deep Navy/Purple Gradient - No pure black */
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            color: #e9ecef;
+            font-family: 'Inter', sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            margin: 0;
+        }
+
+        h1 {
+            font-size: 3.5rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            letter-spacing: -1px;
+            background: linear-gradient(to right, #4facfe 0%, #00f2fe 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .container {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 2rem;
+            border-radius: 24px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+            text-align: center;
+            width: 90%;
+            max-width: 450px;
+        }
+
+        .stats {
+            margin-top: 1.5rem;
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+    </style>
 </head>
 <body>
-    <div style="width: 400px; margin: auto; text-align: center;">
-        <h2>Project Timeline</h2>
-        <canvas id="myChart"></canvas>
+
+    <h1>Project - Niyam</h1>
+    
+    <div class="container">
+        <canvas id="niyamChart"></canvas>
+        <div class="stats" id="dateDisplay"></div>
     </div>
 
     <script>
-        const startDate = new Date('2026-01-01');
+        const startDate = new Date('2026-02-02');
         const endDate = new Date('2027-01-01');
         const today = new Date();
 
-        // Calculate Days
-        const total = (endDate - startDate) / (1000 * 60 * 60 * 24);
-        let elapsed = Math.floor((today - startDate) / (1000 * 60 * 60 * 24));
-        
-        // Safety checks
+        const total = Math.ceil((endDate - startDate) / (86400000));
+        let elapsed = Math.floor((today - startDate) / (86400000));
         elapsed = Math.max(0, Math.min(elapsed, total));
         const remaining = total - elapsed;
 
-        // Render Chart
-        const ctx = document.getElementById('myChart').getContext('2d');
+        document.getElementById('dateDisplay').innerText = `Day ${elapsed} of ${total}`;
+
+        const ctx = document.getElementById('niyamChart').getContext('2d');
         new Chart(ctx, {
             type: 'doughnut',
             data: {
-                labels: ['Elapsed Days', 'Remaining Days'],
+                labels: ['Progress', 'Remaining'],
                 datasets: [{
                     data: [elapsed, remaining],
-                    backgroundColor: ['#FF6384', '#36A2EB']
+                    backgroundColor: ['#4facfe', '#2d3436'], // Neon blue vs muted slate
+                    borderColor: 'rgba(255,255,255,0.1)',
+                    borderWidth: 2,
+                    hoverOffset: 10
                 }]
             },
             options: {
+                cutout: '75%',
                 plugins: {
-                    legend: { position: 'bottom' }
+                    legend: {
+                        position: 'bottom',
+                        labels: { color: '#e9ecef', font: { family: 'Inter', size: 14 } }
+                    }
                 }
             }
         });
