@@ -7,9 +7,9 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;600&display=swap" rel="stylesheet">
     <style>
         body {
-            /* Warm Dark Background - Deep Aubergine/Charcoal */
-            background: radial-gradient(circle at center, #2d1b2d 0%, #1a0f1a 100%);
-            color: #ffffff;
+            /* Complementary Dark Espresso background */
+            background: radial-gradient(circle at center, #2c1810 0%, #1a0f0a 100%);
+            color: #f4e4bc; /* Soft cream text */
             font-family: 'Inter', sans-serif;
             display: flex;
             flex-direction: column;
@@ -24,20 +24,19 @@
             font-weight: 600;
             margin-bottom: 0.5rem;
             letter-spacing: -1px;
-            /* Bright Sunrise Gradient */
-            background: linear-gradient(to right, #ff9a9e 0%, #fecfef 100%);
+            /* Turmeric-inspired text gradient */
+            background: linear-gradient(to right, #FFC300 0%, #FF5733 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            text-shadow: 0 10px 20px rgba(0,0,0,0.2);
         }
 
         .container {
-            background: rgba(255, 255, 255, 0.07);
+            background: rgba(255, 255, 255, 0.03);
             backdrop-filter: blur(15px);
-            border: 1px solid rgba(255, 255, 255, 0.15);
+            border: 1px solid rgba(255, 195, 0, 0.2); /* Turmeric tinted border */
             padding: 2.5rem;
             border-radius: 30px;
-            box-shadow: 0 25px 50px rgba(0,0,0,0.5);
+            box-shadow: 0 25px 50px rgba(0,0,0,0.6);
             text-align: center;
             width: 90%;
             max-width: 450px;
@@ -46,9 +45,10 @@
         .stats {
             margin-top: 1.5rem;
             font-size: 1.1rem;
-            font-weight: 300;
-            color: #ff9a9e;
+            font-weight: 600;
+            color: #FFC300; /* Turmeric */
             letter-spacing: 1px;
+            text-transform: uppercase;
         }
     </style>
 </head>
@@ -62,41 +62,44 @@
     </div>
 
     <script>
+        // Start date changed to Jan 1st, 2026
         const startDate = new Date('2026-01-01');
         const endDate = new Date('2027-01-01');
         const today = new Date();
 
         const total = Math.ceil((endDate - startDate) / (86400000));
         let elapsed = Math.floor((today - startDate) / (86400000));
+        
+        // Ensure values stay within bounds
         elapsed = Math.max(0, Math.min(elapsed, total));
         const remaining = total - elapsed;
 
         document.getElementById('dateDisplay').innerText = `${elapsed} DAYS COMPLETED`;
 
         const ctx = document.getElementById('niyamChart').getContext('2d');
-        
-        // Gradient for the "Elapsed" slice
-        const gradient = ctx.createLinearGradient(0, 0, 0, 400);
-        gradient.addColorStop(0, '#ff9a9e'); // Soft Pink
-        gradient.addColorStop(1, '#fad0c4'); // Apricot
 
         new Chart(ctx, {
             type: 'doughnut',
             data: {
-                labels: ['Completed', 'Upcoming'],
+                labels: ['Completed', 'Remaining'],
                 datasets: [{
                     data: [elapsed, remaining],
-                    backgroundColor: [gradient, 'rgba(255, 255, 255, 0.1)'], 
-                    borderColor: 'transparent',
-                    hoverOffset: 15
+                    // Turmeric Color vs Deep Red Color
+                    backgroundColor: ['#FFC300', '#8B0000'], 
+                    borderColor: 'rgba(0,0,0,0.3)',
+                    borderWidth: 2,
+                    hoverOffset: 20
                 }]
             },
             options: {
-                cutout: '80%',
+                cutout: '70%',
                 plugins: {
                     legend: {
                         position: 'bottom',
-                        labels: { color: '#ffffff', font: { family: 'Inter', size: 14 } }
+                        labels: { 
+                            color: '#f4e4bc', 
+                            font: { family: 'Inter', size: 14, weight: '600' } 
+                        }
                     }
                 }
             }
