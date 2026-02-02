@@ -7,9 +7,9 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;600&display=swap" rel="stylesheet">
     <style>
         body {
-            /* Deep Navy/Purple Gradient - No pure black */
-            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
-            color: #e9ecef;
+            /* Warm Dark Background - Deep Aubergine/Charcoal */
+            background: radial-gradient(circle at center, #2d1b2d 0%, #1a0f1a 100%);
+            color: #ffffff;
             font-family: 'Inter', sans-serif;
             display: flex;
             flex-direction: column;
@@ -24,18 +24,20 @@
             font-weight: 600;
             margin-bottom: 0.5rem;
             letter-spacing: -1px;
-            background: linear-gradient(to right, #4facfe 0%, #00f2fe 100%);
+            /* Bright Sunrise Gradient */
+            background: linear-gradient(to right, #ff9a9e 0%, #fecfef 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
+            text-shadow: 0 10px 20px rgba(0,0,0,0.2);
         }
 
         .container {
-            background: rgba(255, 255, 255, 0.05);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            padding: 2rem;
-            border-radius: 24px;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+            background: rgba(255, 255, 255, 0.07);
+            backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            padding: 2.5rem;
+            border-radius: 30px;
+            box-shadow: 0 25px 50px rgba(0,0,0,0.5);
             text-align: center;
             width: 90%;
             max-width: 450px;
@@ -43,8 +45,10 @@
 
         .stats {
             margin-top: 1.5rem;
-            font-size: 0.9rem;
-            opacity: 0.8;
+            font-size: 1.1rem;
+            font-weight: 300;
+            color: #ff9a9e;
+            letter-spacing: 1px;
         }
     </style>
 </head>
@@ -67,27 +71,32 @@
         elapsed = Math.max(0, Math.min(elapsed, total));
         const remaining = total - elapsed;
 
-        document.getElementById('dateDisplay').innerText = `Day ${elapsed} of ${total}`;
+        document.getElementById('dateDisplay').innerText = `${elapsed} DAYS COMPLETED`;
 
         const ctx = document.getElementById('niyamChart').getContext('2d');
+        
+        // Gradient for the "Elapsed" slice
+        const gradient = ctx.createLinearGradient(0, 0, 0, 400);
+        gradient.addColorStop(0, '#ff9a9e'); // Soft Pink
+        gradient.addColorStop(1, '#fad0c4'); // Apricot
+
         new Chart(ctx, {
             type: 'doughnut',
             data: {
-                labels: ['Progress', 'Remaining'],
+                labels: ['Completed', 'Upcoming'],
                 datasets: [{
                     data: [elapsed, remaining],
-                    backgroundColor: ['#4facfe', '#2d3436'], // Neon blue vs muted slate
-                    borderColor: 'rgba(255,255,255,0.1)',
-                    borderWidth: 2,
-                    hoverOffset: 10
+                    backgroundColor: [gradient, 'rgba(255, 255, 255, 0.1)'], 
+                    borderColor: 'transparent',
+                    hoverOffset: 15
                 }]
             },
             options: {
-                cutout: '75%',
+                cutout: '80%',
                 plugins: {
                     legend: {
                         position: 'bottom',
-                        labels: { color: '#e9ecef', font: { family: 'Inter', size: 14 } }
+                        labels: { color: '#ffffff', font: { family: 'Inter', size: 14 } }
                     }
                 }
             }
